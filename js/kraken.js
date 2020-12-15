@@ -506,6 +506,9 @@ module.exports = class kraken extends Exchange {
         //
         const result = this.safeValue (response, 'result', {});
         const orderbook = this.safeValue (result, market['id']);
+        if (orderbook === undefined) {
+            throw new ExchangeNotAvailable (this.id + ' ' + result.toString ());
+        }
         return this.parseOrderBook (orderbook);
     }
 
